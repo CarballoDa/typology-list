@@ -34,12 +34,15 @@
                         <div class="mb-3">
                             <label for="inputListTitle" class="form-label">Insert your List Title</label>
                             <input type="text" class="form-control" id="inputListTitle" aria-describedby="titlelHelp"> 
-                            <div id="titlelHelp" class="form-text">Max size 50 characters.</div>                       
+                            <div id="titlelHelp" class="form-text">Max size 50 characters</div>                       
                         </div>
                     </div>
                     <div class="col-sm-2">
-                        <div class="mb-2">
-                            <button type="button" id="newListTitle" class="btn btn-primary w-100">Create List</button>
+                        <div class="mb-2 visible" id="newListTitle">
+                            <button type="button" class="btn btn-primary w-100">Create List</button>                            
+                        </div>
+                        <div class="mb-2 invisible" id="removeListTitle">
+                            <button type="button" class="btn btn-danger w-100">Delete List</button>
                         </div>
                     </div>
                 </form>
@@ -52,12 +55,12 @@
                             <div class="mb-3">
                                 <label for="inputTipologyTitle" class="form-label">Insert your new typology</label>
                                 <input type="text" class="form-control" id="inputTipologyTitle" aria-describedby="typologyHelp"> 
-                                <div id="typologyHelp" class="form-text">Max size 30 characters.</div>                       
+                                <div id="typologyHelp" class="form-text">Max size 30 characters</div>                       
                             </div>
                         </div>
                         <div class="col-sm-2">
                             <div class="mb-2">
-                                <button type="submit" class="btn btn-primary w-100">+</button>
+                                <button type="button" id="newTypology" class="btn btn-primary w-100">+</button>
                             </div>
                         </div>
                     </form> 
@@ -69,19 +72,19 @@
                             <div class="mb-3">
                                 <label for="inputItemTitle" class="form-label">Insert your new Item</label>
                                 <input type="text" class="form-control" id="inputItemTitle" aria-describedby="itemTitleHelp"> 
-                                <div id="itemTitleHelp" class="form-text">Max size 30 characters.</div>                       
+                                <div id="itemTitleHelp" class="form-text">Max size 30 characters</div>                       
                             </div>
                         </div>
                         <div class="col-sm-2">
                             <div class="mb-3">
                                 <label for="inputItemQuantity" class="form-label">Quantity</label>
-                                <input type="number" max="100" value="1" class="form-control" id="inputItemQuantity" aria-describedby="itemQuantityHelp"> 
-                                <div id="itemQuantityHelp" class="form-text">No quantity limit.</div>                       
+                                <input type="number" max="100" min="0" value="1" class="form-control" id="inputItemQuantity" aria-describedby="itemQuantityHelp"> 
+                                <div id="itemQuantityHelp" class="form-text">1 to 100</div>                       
                             </div>
                         </div>
                         <div class="col-sm-2">
                             <div class="mb-2">
-                                <button type="submit" class="btn btn-primary w-100">+</button>
+                                <button type="button" id="newItem" class="btn btn-primary w-100">+</button>
                             </div>
                         </div>
                     </form> 
