@@ -6,7 +6,7 @@ export const List = {
     typologies : [],
     items : [],
     addTitle : function(value){
-        return (value.length === 0) ? alert('Title can not be empty') : this.title = value;
+        this.title = value;
     },
     addTypo : function(value){
         this.typologies.push(value);
@@ -23,8 +23,8 @@ export const List = {
             this.typologies.splice(id - 1, 1);
         }
     },
-    addItem : function(valueA, valueB){
-        this.items.push({title : valueA, quantity : valueB});
+    addItem : function(valueA, valueB, valueC){
+        this.items.push({title : valueA, quantity : valueB, typology : valueC});
     },
     deleteItem : function(id){
         switch(id){
