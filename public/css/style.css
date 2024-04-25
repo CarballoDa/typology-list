@@ -5,3 +5,9 @@ a.wh-link{
 a.wh-link:hover{
     color:grey;
 }
+button.btnHidden{
+    height: 0px;
+    visibility: hidden;
+    margin: 0;
+    padding: 0;
+}
