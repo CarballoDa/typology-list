@@ -1,3 +1,4 @@
+//import { Email } from 'https://smtpjs.com/v3/smtp.js';
 import { List } from './list.object.js';
 /* 
 * List Title Managment
@@ -6,9 +7,7 @@ import { List } from './list.object.js';
 function createListTitle(){ 
     List.addTitle((document.getElementById("inputListTitle").value.length > 0) ? document.getElementById("inputListTitle").value : 'Empty Title List');
     document.getElementById("inputListTitle").value = List.title;
-    document.getElementById("inputListTitle").disabled = true;
-    document.getElementById("inputListTitleButton").disabled = true;
-    document.getElementById("removeListTitle").disabled = false;
+    ableOrDisableListTools(true, false);
     changeVisivilityStateById('listActions', 'invisible', 'visible');
 }
 const newListTileButton = document.getElementById("inputListTitleButton");
@@ -19,9 +18,7 @@ newListTileButton.addEventListener('click', createListTitle, false);
 */
 function removeListTitle(){ 
     List.addTitle(document.getElementById("inputListTitle").value = "");
-    document.getElementById("inputListTitleButton").disabled = false;
-    document.getElementById("newListTitle").disabled = false;
-    document.getElementById("removeListTitle").disabled = true;  
+    ableOrDisableListTools(false, true);
     changeVisivilityStateById('listActions', 'visible', 'invisible');
 }
 const removeListTitleButton = document.getElementById("removeListTitle");
@@ -101,7 +98,12 @@ downloadListButton.addEventListener('click', downloadList, false);
 * Function sendList()
 */
 function sendList(){ 
-    alert('Work in progress...');
+    let body = "Items : %0D%0A%0D%0A";
+    List.getItems().forEach((element, index) => {
+        body += `${index + 1} - ${(element.typology.length > 0) ? element.typology : ""} ${element.title} X ${element.quantity} %0D%0A`;
+    });
+    body += "%0D%0ARemember : make sure that your bag has inside all items. Your life depends on!!";
+    window.open(`https://mail.google.com/mail/?view=cm&fs=1&su=New List : ${List.title}&body=${body}`);
 }
 const sendListButton = document.getElementById("sendList");
 sendListButton.addEventListener('click', sendList, false);
@@ -125,3 +127,15 @@ function changeVisivilityStateById(id, oldClass, newClass){
     document.getElementById(id).classList.remove(oldClass);
     document.getElementById(id).classList.add(newClass);    
 }
+/*
+* Function ableOrDisableListTools(bool a. bool b)
+* Changes an disabled state by id css class on List Tools
+*/
+function ableOrDisableListTools(a, b){
+    document.getElementById("inputListTitle").disabled = a;
+    document.getElementById("inputListTitleButton").disabled = a;
+    document.getElementById("removeListTitle").disabled = b;
+    document.getElementById("downloadList").disabled = b;
+    document.getElementById("sendList").disabled = b;
+}
+    
