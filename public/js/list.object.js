@@ -9,6 +9,7 @@ export const List = {
         this.title = value;
     },
     addTypo : function(value){
+        if(value.length === 0){ return alert('Typology title can not be empty');}
         this.typologies.push(value);
     },
     deleteTypo : function(id){
@@ -24,6 +25,7 @@ export const List = {
         }
     },
     addItem : function(valueA, valueB, valueC){
+        if(valueA.length === 0){ return alert('Item title can not be empty');}
         this.items.push({title : valueA, quantity : valueB, typology : valueC});
     },
     deleteItem : function(id){
