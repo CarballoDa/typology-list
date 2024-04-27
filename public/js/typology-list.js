@@ -1,4 +1,3 @@
-//import { Email } from 'https://smtpjs.com/v3/smtp.js';
 import { List } from './list.object.js';
 /* 
 * List Title Managment
@@ -89,8 +88,19 @@ function loadItemsHtml(){
 /* 
 * Function downloadList()
 */
-async function downloadList(){     
-    alert('Work in progress...');
+async function downloadList(){
+    let content = `${List.title} \n\nItems : \n\n`;
+    List.getItems().forEach((element, index) => {
+        content += `${index + 1} - ${(element.typology.length > 0) ? element.typology : ""} ${element.title} X ${element.quantity} \n`;
+    });
+    // create HTML file
+    let file = new Blob([content], {
+        type: 'text/txt'
+    });
+    const linkId = document.getElementById('downloadLink');
+    linkId.href = URL.createObjectURL(file);
+    linkId.download = `${List.title}.txt`;
+    linkId.click();
 }
 const downloadListButton = document.getElementById("downloadList");
 downloadListButton.addEventListener('click', downloadList, false);
@@ -113,9 +123,10 @@ sendListButton.addEventListener('click', sendList, false);
 */
 window.addEventListener('keydown',function(e) {
     if (e.keyIdentifier=='U+000A' || e.keyIdentifier=='Enter' || e.keyCode==13) {
-        if (e.target.nodeName=='INPUT' && e.target.type=='text') {
+        if (e.target.nodeName=='INPUT' && (e.target.type=='text' || e.target.type=='number')) {
             e.preventDefault();
-            document.getElementById(e.target.id + 'Button').click();
+            let target = (e.target.id === 'inputItemQuantity') ? 'inputItemTitle' : e.target.id;
+            document.getElementById(target + 'Button').click();
         }
     }
 }, true);
@@ -138,4 +149,3 @@ function ableOrDisableListTools(a, b){
     document.getElementById("downloadList").disabled = b;
     document.getElementById("sendList").disabled = b;
 }
-    
