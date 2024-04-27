@@ -4,7 +4,7 @@ import { List } from './list.object.js';
 * Function createListTitle()
 */
 function createListTitle(){ 
-    List.addTitle((document.getElementById("inputListTitle").value.length > 0) ? document.getElementById("inputListTitle").value : 'Empty Title List');
+    List.addTitle((document.getElementById("inputListTitle").value.length > 0 && List.title === null) ? document.getElementById("inputListTitle").value : List.title);
     document.getElementById("inputListTitle").value = List.title;
     ableOrDisableListTools(true, false);
     changeVisivilityStateById('listActions', 'invisible', 'visible');
@@ -121,11 +121,11 @@ sendListButton.addEventListener('click', sendList, false);
 */
 function exportList(){ 
     let content = `${List.title}\n`;
-    List.getTyposSortAsc().forEach((element, index) => {
+    List.getTyposSortAsc().forEach(element => {
         content += `${element}|`;
     });
     content += '\n';
-    List.getItems().forEach((element, index) => {
+    List.getItems().forEach(element => {
         content += `${(element.typology.length > 0) ? element.typology : ""};${element.title};${element.quantity}|`;
     })
     let file = new Blob([content], {
@@ -143,27 +143,36 @@ exportListButton.addEventListener('click', exportList, false);
 */
 function importList(){ 
     document.getElementById('importListfile').click();
-    document.getElementById('formImportListFile').submit();
 }
 const importListButton = document.getElementById("importList");
 importListButton.addEventListener('click', importList, false);
-
-
-function handleSubmit(event) {
-    const form = event.currentTarget;
-    const url = new URL(form.action);
-    const formData = new FormData(form);
-    const fetchOptions = {
-        method: form.method,
-        body: formData,
-    };
-    fetch(url, fetchOptions);
-    console.log(fetchOptions);
-
-    event.preventDefault();
+/* 
+* Function loadList()
+*/
+function loadList(){ 
+    let textContent = '';
+    let fr = new FileReader();
+    fr.onload = function () {
+        fr.result.split('\n').forEach((element, index) => {
+            switch(index){
+                case 0:
+                createListTitle(List.title = element);
+                break;
+                case 1:
+                List.loadImportTypologies(element.split('|'));
+                loadTypologiesHtml();
+                break;
+                case 2:
+                List.loadImportItems(element.split('|'));
+                loadItemsHtml();
+                break;
+            }
+        })       
+    }
+    fr.readAsText(this.files[0]);
 }
-const hiddenForm = document.querySelector("#formImportListFile");
-hiddenForm.addEventListener('submit', handleSubmit, false);
+const importListfile = document.getElementById('importListfile')
+importListfile.addEventListener('change', loadList, false);
 /********************************************************************************************************/
 /*
 * Preventing key enter usage and given click action to relationed button

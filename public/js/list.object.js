@@ -2,7 +2,7 @@
 * Object List Declaration
 */
 export const List = {
-    title : "",
+    title : null,
     typologies : [],
     items : [],
     addTitle : function(value){
@@ -64,6 +64,21 @@ export const List = {
             if(a.title<b.title){return 1;}
             if(a.title>b.title){return -1;}
             return 0;
+        });
+    },
+    loadImportTypologies : function(values){
+        values.forEach(element => {
+            if(element.length > 0){
+                this.addTypo(element);
+            }
+        });
+    },
+    loadImportItems : function(values){
+        values.forEach(element => {
+            if(element.length > 0){
+                let values = element.split(';');
+                this.addItem(values[1], values[2], values[0]);
+            }
         });
     },
 };
