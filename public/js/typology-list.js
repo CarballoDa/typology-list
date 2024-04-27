@@ -92,8 +92,7 @@ async function downloadList(){
     let content = `${List.title} \n\nItems : \n\n`;
     List.getItems().forEach((element, index) => {
         content += `${index + 1} - ${(element.typology.length > 0) ? element.typology : ""} ${element.title} X ${element.quantity} \n`;
-    });
-    // create HTML file
+    })
     let file = new Blob([content], {
         type: 'text/txt'
     });
@@ -117,6 +116,54 @@ function sendList(){
 }
 const sendListButton = document.getElementById("sendList");
 sendListButton.addEventListener('click', sendList, false);
+/* 
+* Function exportList()
+*/
+function exportList(){ 
+    let content = `${List.title}\n`;
+    List.getTyposSortAsc().forEach((element, index) => {
+        content += `${element}|`;
+    });
+    content += '\n';
+    List.getItems().forEach((element, index) => {
+        content += `${(element.typology.length > 0) ? element.typology : ""};${element.title};${element.quantity}|`;
+    })
+    let file = new Blob([content], {
+        type: 'text/txt'
+    });
+    const linkId = document.getElementById('downloadLink');
+    linkId.href = URL.createObjectURL(file);
+    linkId.download = `${List.title}.export.txt`;
+    linkId.click();
+}
+const exportListButton = document.getElementById("exportList");
+exportListButton.addEventListener('click', exportList, false);
+/* 
+* Function importList()
+*/
+function importList(){ 
+    document.getElementById('importListfile').click();
+    document.getElementById('formImportListFile').submit();
+}
+const importListButton = document.getElementById("importList");
+importListButton.addEventListener('click', importList, false);
+
+
+function handleSubmit(event) {
+    const form = event.currentTarget;
+    const url = new URL(form.action);
+    const formData = new FormData(form);
+    const fetchOptions = {
+        method: form.method,
+        body: formData,
+    };
+    fetch(url, fetchOptions);
+    console.log(fetchOptions);
+
+    event.preventDefault();
+}
+const hiddenForm = document.querySelector("#formImportListFile");
+hiddenForm.addEventListener('submit', handleSubmit, false);
 /********************************************************************************************************/
 /*
 * Preventing key enter usage and given click action to relationed button
@@ -148,4 +195,6 @@ function ableOrDisableListTools(a, b){
     document.getElementById("removeListTitle").disabled = b;
     document.getElementById("downloadList").disabled = b;
     document.getElementById("sendList").disabled = b;
+    document.getElementById("exportList").disabled = b;
+    document.getElementById("importList").disabled = a;
 }
