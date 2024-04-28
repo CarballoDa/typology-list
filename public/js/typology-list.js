@@ -49,10 +49,10 @@ export function removeTypology(id){
 function loadTypologiesHtml(){
     document.getElementById("typologiesList").innerHTML = '';
     document.getElementById("selectItemTypo").innerHTML = '<option value="">Typology not selected</option>';
-    List.getTyposSortAsc().forEach((element, index) => {
-        document.getElementById("typologiesList").innerHTML += `<li class="list-group-item">${element} <button type="button" class="removeTypo btn btn-danger float-sm-end pt-1 pb-1"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-trash" viewBox="0 0 16 16"><path d="M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5m2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5m3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0z"></path><path d="M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1H6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1h3.5a1 1 0 0 1 1 1zM4.118 4 4 4.059V13a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4.059L11.882 4zM2.5 3h11V2h-11z"></path></svg></button></li>`;
+    List.getTypos().forEach((element, index) => {
+        document.getElementById("typologiesList").innerHTML += `<li class="list-group-item">${element} <button type="button" data-id="${index}" data-obj="removeTypo" class="removeTypo btn btn-danger float-sm-end pt-1 pb-1"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" dat-id="${index}" data-obj="removeTypo" class="removeTypo bi bi-trash" viewBox="0 0 16 16"><path d="M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5m2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5m3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0z"></path><path d="M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1H6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1h3.5a1 1 0 0 1 1 1zM4.118 4 4 4.059V13a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4.059L11.882 4zM2.5 3h11V2h-11z"></path></svg></button></li>`;
         document.getElementById("selectItemTypo").innerHTML += `<option value="${element}">${element}</option>`;
-    });
+    }); 
 }
 /* 
 * List Items Managment
@@ -81,7 +81,7 @@ export function removeItem(id){
 function loadItemsHtml(){
     document.getElementById("itemsList").innerHTML = '';
     List.getItems().forEach((element, index) => {
-        document.getElementById("itemsList").innerHTML += `<li class="list-group-item">${(element.typology.length > 0) ? element.typology : ""} ${element.title} X ${element.quantity} <button type="button" onclick="removeItem(${index})" class="removeItem btn btn-danger float-sm-end pt-1 pb-1"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-trash" viewBox="0 0 16 16"><path d="M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5m2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5m3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0z"></path><path d="M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1H6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1h3.5a1 1 0 0 1 1 1zM4.118 4 4 4.059V13a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4.059L11.882 4zM2.5 3h11V2h-11z"></path></svg></button></li>`;
+        document.getElementById("itemsList").innerHTML += `<li class="list-group-item">${(element.typology.length > 0) ? element.typology : ""} ${element.title} X ${element.quantity} <button type="button" data-id="${index}" data-obj="removeItem" class="btn btn-danger float-sm-end pt-1 pb-1"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-trash" viewBox="0 0 16 16"><path d="M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5m2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5m3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0z"></path><path d="M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1H6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1h3.5a1 1 0 0 1 1 1zM4.118 4 4 4.059V13a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4.059L11.882 4zM2.5 3h11V2h-11z"></path></svg></button></li>`;
     });
 }
 /********************************************************************************************************/
@@ -184,6 +184,22 @@ window.addEventListener('keydown',function(e) {
             let target = (e.target.id === 'inputItemQuantity') ? 'inputItemTitle' : e.target.id;
             document.getElementById(target + 'Button').click();
         }
+    }
+}, true);
+/*
+* Redirecting to action by click event on delete Typo or delete Item button
+*/
+document.getElementById('typologiesList').addEventListener("click", function(e){
+    //console.log(e.explicitOriginalTarget.attributes.getNamedItem("data-obj").value);
+    if(e.explicitOriginalTarget.attributes.getNamedItem("data-obj").value === 'removeTypo'){
+        List.deleteTypo(e.explicitOriginalTarget.attributes.getNamedItem("data-id").value);
+        loadTypologiesHtml();
+    }
+}, true);
+document.getElementById('itemsList').addEventListener("click", function(e){
+    if(e.explicitOriginalTarget.attributes.getNamedItem("data-obj").value === 'removeItem'){
+        List.deleteItem(e.explicitOriginalTarget.attributes.getNamedItem("data-id").value);
+        loadItemsHtml();
     }
 }, true);
 /*

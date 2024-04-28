@@ -21,7 +21,7 @@ export const List = {
             this.typologies.pop();
             break;
             default:
-            this.typologies.splice(id - 1, 1);
+            this.typologies.splice(id, 1);
         }
     },
     addItem : function(valueA, valueB, valueC){
@@ -37,7 +37,7 @@ export const List = {
             this.items.pop();
             break;
             default:
-            this.items.splice(id - 1, 1);
+            this.items.splice(id, 1);
         }
     },
     getTypos : function(){
