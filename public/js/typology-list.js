@@ -21,6 +21,9 @@ function removeListTitle(){
         List.deleteTitle();
         ableOrDisableListTools(false, true);
         changeVisivilityStateById('listActions', 'visible', 'invisible');
+        document.getElementById("typologiesList").innerHTML = '';
+        document.getElementById("selectItemTypo").innerHTML = '';
+        document.getElementById("itemsList").innerHTML = '';        
     }
 }
 const removeListTitleButton = document.getElementById("removeListTitle");
@@ -131,13 +134,21 @@ function exportList(){
     List.getItems().forEach(element => {
         content += `${(element.typology.length > 0) ? element.typology : ""};${element.title};${element.quantity}|`;
     })
-    let file = new Blob([content], {
-        type: 'text/txt'
-    });
+    let file = new Blob([content], {type: 'text/txt'});
     const linkId = document.getElementById('downloadLink');
     linkId.href = URL.createObjectURL(file);
     linkId.download = `${List.title}.export.txt`;
     linkId.click();
+    
+    /* JSON EXPORT 
+    const content = JSON.stringify(List);
+    const file= new Blob([content], {type: "application/json"});
+    const linkId = document.getElementById('downloadLink');
+    linkId.href = URL.createObjectURL(file);
+    linkId.download = `${List.title}.export.json`;
+    linkId.click();
+    */
+    
 }
 const exportListButton = document.getElementById("exportList");
 exportListButton.addEventListener('click', exportList, false);
@@ -152,8 +163,7 @@ importListButton.addEventListener('click', importList, false);
 /* 
 * Function loadList()
 */
-function loadList(){ 
-    let textContent = '';
+function loadList(){
     let fr = new FileReader();
     fr.onload = function () {
         fr.result.split('\n').forEach((element, index) => {
@@ -170,7 +180,14 @@ function loadList(){
                 loadItemsHtml();
                 break;
             }
-        })       
+        })
+        /* JSON Import
+        console.log(JSON.parse(fr.result));
+        createListTitle(List.title = fr.result.title);
+        List.typologies = fr.result.typologies;
+        List.items = fr.result.items;
+        loadTypologiesHtml();
+        loadItemsHtml();*/
     }
     fr.readAsText(this.files[0]);
 }
