@@ -6,7 +6,10 @@ export const List = {
     typologies : [],
     items : [],
     addTitle : function(value){
-        this.title = value;
+        this.title = (value !== null && value.length > 0) ? value : 'Empty list title';
+    },
+    deleteTitle : function(){
+        this.title = null;
     },
     addTypo : function(value){
         if(value.length === 0){ return alert('Typology title can not be empty');}

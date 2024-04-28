@@ -15,10 +15,13 @@ newListTileButton.addEventListener('click', createListTitle, false);
 * Function removeListTitle()
 * Info : Will be deleted all list content (title, typos, items)
 */
-function removeListTitle(){ 
-    List.addTitle(document.getElementById("inputListTitle").value = "");
-    ableOrDisableListTools(false, true);
-    changeVisivilityStateById('listActions', 'visible', 'invisible');
+function removeListTitle(){
+    if(confirm('Do you want to delete the list?')){
+        document.getElementById("inputListTitle").value = ""; 
+        List.deleteTitle();
+        ableOrDisableListTools(false, true);
+        changeVisivilityStateById('listActions', 'visible', 'invisible');
+    }
 }
 const removeListTitleButton = document.getElementById("removeListTitle");
 removeListTitleButton.addEventListener('click', removeListTitle, false);
@@ -38,7 +41,7 @@ newTypologyButton.addEventListener('click', addTypology, false);
 * Function removeTypology()
 * Info : Typologies in use on the list can't be removed
 */
-export function removeTypology(id){
+function removeTypology(id){
     List.deleteTypo(id);
     loadTypologiesHtml();  
 }
@@ -50,7 +53,7 @@ function loadTypologiesHtml(){
     document.getElementById("typologiesList").innerHTML = '';
     document.getElementById("selectItemTypo").innerHTML = '<option value="">Typology not selected</option>';
     List.getTypos().forEach((element, index) => {
-        document.getElementById("typologiesList").innerHTML += `<li class="list-group-item">${element} <button type="button" data-id="${index}" data-obj="removeTypo" class="removeTypo btn btn-danger float-sm-end pt-1 pb-1"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" dat-id="${index}" data-obj="removeTypo" class="removeTypo bi bi-trash" viewBox="0 0 16 16"><path d="M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5m2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5m3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0z"></path><path d="M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1H6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1h3.5a1 1 0 0 1 1 1zM4.118 4 4 4.059V13a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4.059L11.882 4zM2.5 3h11V2h-11z"></path></svg></button></li>`;
+        document.getElementById("typologiesList").innerHTML += `<li class="list-group-item">${element} <button type="button" data-id="${index}" data-iName="${element}" data-obj="removeTypo" class="remove btn btn-danger float-sm-end pt-1 pb-1"></button></li>`;
         document.getElementById("selectItemTypo").innerHTML += `<option value="${element}">${element}</option>`;
     }); 
 }
@@ -70,7 +73,7 @@ newItemButton.addEventListener('click', addItem, false);
 /* 
 * Function removeItem()
 */
-export function removeItem(id){
+function removeItem(id){
     List.deleteItem(id);
     loadItemsHtml();
 }
@@ -81,7 +84,7 @@ export function removeItem(id){
 function loadItemsHtml(){
     document.getElementById("itemsList").innerHTML = '';
     List.getItems().forEach((element, index) => {
-        document.getElementById("itemsList").innerHTML += `<li class="list-group-item">${(element.typology.length > 0) ? element.typology : ""} ${element.title} X ${element.quantity} <button type="button" data-id="${index}" data-obj="removeItem" class="btn btn-danger float-sm-end pt-1 pb-1"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-trash" viewBox="0 0 16 16"><path d="M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5m2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5m3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0z"></path><path d="M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1H6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1h3.5a1 1 0 0 1 1 1zM4.118 4 4 4.059V13a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4.059L11.882 4zM2.5 3h11V2h-11z"></path></svg></button></li>`;
+        document.getElementById("itemsList").innerHTML += `<li class="list-group-item">${(element.typology.length > 0) ? element.typology : ""} ${element.title} X ${element.quantity} <button type="button" data-id="${index}" data-iName="${element.title}" data-obj="removeItem" class="remove btn btn-danger float-sm-end pt-1 pb-1"></button></li>`;
     });
 }
 /********************************************************************************************************/
@@ -192,14 +195,16 @@ window.addEventListener('keydown',function(e) {
 document.getElementById('typologiesList').addEventListener("click", function(e){
     //console.log(e.explicitOriginalTarget.attributes.getNamedItem("data-obj").value);
     if(e.explicitOriginalTarget.attributes.getNamedItem("data-obj").value === 'removeTypo'){
-        List.deleteTypo(e.explicitOriginalTarget.attributes.getNamedItem("data-id").value);
-        loadTypologiesHtml();
+        if(confirm('Do you want to delete typology ' + e.explicitOriginalTarget.attributes.getNamedItem("data-iName").value + '?')){
+            removeTypology(e.explicitOriginalTarget.attributes.getNamedItem("data-id").value);
+        }
     }
 }, true);
 document.getElementById('itemsList').addEventListener("click", function(e){
     if(e.explicitOriginalTarget.attributes.getNamedItem("data-obj").value === 'removeItem'){
-        List.deleteItem(e.explicitOriginalTarget.attributes.getNamedItem("data-id").value);
-        loadItemsHtml();
+        if(confirm('Do you want to delete item ' + e.explicitOriginalTarget.attributes.getNamedItem("data-iName").value + '?')){
+            removeItem(e.explicitOriginalTarget.attributes.getNamedItem("data-id").value);
+        }
     }
 }, true);
 /*
