@@ -93,6 +93,7 @@ function loadItemsHtml(){
 /********************************************************************************************************/
 /* 
 * Function downloadList()
++ Generates a {List.title}.txt file whith list title and items formated inside
 */
 async function downloadList(){
     let content = `${List.title} \n\nItems : \n\n`;
@@ -117,13 +118,15 @@ function sendList(){
     List.getItems().forEach((element, index) => {
         body += `${index + 1} - ${(element.typology.length > 0) ? element.typology : ""} ${element.title} X ${element.quantity} %0D%0A`;
     });
-    body += "%0D%0ARemember : make sure that your bag has inside all items. Your life depends on!!";
     window.open(`https://mail.google.com/mail/?view=cm&fs=1&su=New List : ${List.title}&body=${body}`);
 }
 const sendListButton = document.getElementById("sendList");
 sendListButton.addEventListener('click', sendList, false);
 /* 
 * Function exportList()
++ Generates a {List.title}.export.txt file whith all list data (title, typologies and items) formated inside
+* This file could be used to import it as list backup.
+* Working on exporting as JSON file...
 */
 function exportList(){ 
     let content = `${List.title}\n`;
@@ -162,6 +165,9 @@ const importListButton = document.getElementById("importList");
 importListButton.addEventListener('click', importList, false);
 /* 
 * Function loadList()
++ Takes a {List.title}.export.txt file whith all list data (title, typologies and items) formated inside
+* The information is loaded into the List object.
+* Working on importing as JSON file...
 */
 function loadList(){
     let fr = new FileReader();
