@@ -1,4 +1,4 @@
 # typology-list
 A typology quantified items list creator. 
-Can be testd at :
+Can be tested at :
 http://dicreaweb.es/typology-list/
