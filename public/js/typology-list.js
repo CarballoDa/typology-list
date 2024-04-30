@@ -2,6 +2,7 @@ import { List } from './list.object.js';
 /* 
 * List Title Managment
 * Function createListTitle()
+* Getting and checking the title input value, list creation by title
 */
 function createListTitle(){ 
     List.addTitle((document.getElementById("inputListTitle").value.length > 0 && List.title === null) ? document.getElementById("inputListTitle").value : List.title);
@@ -13,7 +14,7 @@ const newListTileButton = document.getElementById("inputListTitleButton");
 newListTileButton.addEventListener('click', createListTitle, false);
 /* 
 * Function removeListTitle()
-* Info : Will be deleted all list content (title, typos, items)
+* Deleting all list content (title, typos, items)
 */
 function removeListTitle(){
     if(confirm('Do you want to delete the list?')){
@@ -31,6 +32,7 @@ removeListTitleButton.addEventListener('click', removeListTitle, false);
 /* 
 * List Typologies Managment
 * Function addTypology()
+* Getting the typology input value, typology creation
 */
 function addTypology(){ 
     List.addTypo(document.getElementById("inputTypologyTitle").value);    
@@ -42,7 +44,8 @@ const newTypologyButton = document.getElementById("inputTypologyTitleButton");
 newTypologyButton.addEventListener('click', addTypology, false);
 /* 
 * Function removeTypology()
-* Info : Typologies in use on the list can't be removed
+* Removing typology from List.typologies
+* @param {id} number
 */
 function removeTypology(id){
     List.deleteTypo(id);
@@ -50,7 +53,7 @@ function removeTypology(id){
 }
 /* 
 * Function loadTypologiesHtml()
-* Info : Prepare the HTML with typos info and actions and load the HTML into an specific id
+* Preparing the HTML with typos info and actions and loading the HTML into an specific id
 */
 function loadTypologiesHtml(){
     document.getElementById("typologiesList").innerHTML = '';
@@ -63,6 +66,7 @@ function loadTypologiesHtml(){
 /* 
 * List Items Managment
 * Function addItem()
+* Getting the typology select, item input and quantity input value, item creation
 */
 function addItem(){ 
     List.addItem(document.getElementById("inputItemTitle").value, document.getElementById("inputItemQuantity").value, document.getElementById("selectItemTypo").value);
@@ -75,6 +79,8 @@ const newItemButton = document.getElementById("inputItemTitleButton");
 newItemButton.addEventListener('click', addItem, false);
 /* 
 * Function removeItem()
+* Removing item from List.items
+* @param {id} number
 */
 function removeItem(id){
     List.deleteItem(id);
@@ -82,7 +88,7 @@ function removeItem(id){
 }
 /* 
 * Function loadItemsHtml()
-* Info : Prepare the HTML with items info and actions and load the HTML into an specific id
+* Preparing the HTML with items info and actions and loading the HTML into an specific id
 */
 function loadItemsHtml(){
     document.getElementById("itemsList").innerHTML = '';
@@ -93,7 +99,7 @@ function loadItemsHtml(){
 /********************************************************************************************************/
 /* 
 * Function downloadList()
-+ Generates a {List.title}.txt file whith list title and items formated inside
++ Generating a {List.title}.txt file whith list title and items formated inside. Auto download.
 */
 async function downloadList(){
     let content = `${List.title} \n\nItems : \n\n`;
@@ -112,6 +118,7 @@ const downloadListButton = document.getElementById("downloadList");
 downloadListButton.addEventListener('click', downloadList, false);
 /* 
 * Function sendList()
+* Generating formated email body with List title and items. Opening email managment in navigator to send to anyone.
 */
 function sendList(){ 
     let body = "Items : %0D%0A%0D%0A";
@@ -124,7 +131,7 @@ const sendListButton = document.getElementById("sendList");
 sendListButton.addEventListener('click', sendList, false);
 /* 
 * Function exportList()
-+ Generates a {List.title}.export.txt file whith all list data (title, typologies and items) formated inside
++ Generating a {List.title}.export.txt file whith all list data (title, typologies and items) formated inside. Download auto.
 * This file could be used to import it as list backup.
 * Working on exporting as JSON file...
 */
@@ -157,6 +164,7 @@ const exportListButton = document.getElementById("exportList");
 exportListButton.addEventListener('click', exportList, false);
 /* 
 * Function importList()
+* Uploading previous {List.title}.export.txt file
 */
 function importList(){ 
     document.getElementById('importListfile').click();
@@ -165,8 +173,8 @@ const importListButton = document.getElementById("importList");
 importListButton.addEventListener('click', importList, false);
 /* 
 * Function loadList()
-+ Takes a {List.title}.export.txt file whith all list data (title, typologies and items) formated inside
-* The information is loaded into the List object.
++ Taking an imported {List.title}.export.txt file whith all list data (title, typologies and items) formated inside
+* The information is loaded into the List object and web application
 * Working on importing as JSON file...
 */
 function loadList(){
@@ -231,16 +239,21 @@ document.getElementById('itemsList').addEventListener("click", function(e){
     }
 }, true);
 /*
-* Function changeVisivilityStateById(id. oldClass, newClass)
+* Function changeVisivilityStateById()
 * Changes an visible or invisible id css class removing oldClass and adding newClass
+* param {id} string
+* param {oldClass} string
+* param {newClass} string
 */
 function changeVisivilityStateById(id, oldClass, newClass){
     document.getElementById(id).classList.remove(oldClass);
     document.getElementById(id).classList.add(newClass);    
 }
 /*
-* Function ableOrDisableListTools(bool a. bool b)
+* Function ableOrDisableListTools()
 * Changes an disabled state by id css class on List Tools
+* param {a} bool
+* param {b} bool
 */
 function ableOrDisableListTools(a, b){
     document.getElementById("inputListTitle").disabled = a;
