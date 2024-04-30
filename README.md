@@ -25,7 +25,7 @@
 </div>
 <p>You only need download the files and put them on your local or online server.</p>
 <p>Access example in local server : Open <a href="http://localhost:3000/typology-list/">http://localhost:3000/typology-list/</a></p>
-<p>Access example in online server : Open http://localhost:3000/typology-list/</p>
+<p>Access example in online server : Open http://domainname.ext/typology-list/</p>
 <p>Directory name can be changed if you need it.</p>
 <div class="markdown-heading">
   <h2 class="heading-element">Technologies</h2>
