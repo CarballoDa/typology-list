@@ -1,4 +1,4 @@
-export class List{
+export class List {
     title: string = '';
     typologies: string[];
     items: any[];
@@ -22,7 +22,8 @@ export class List{
 
     deleteTypo(id: number): void
     {
-        switch(true){
+        switch(true)
+        {
             case (id === 0):
             this.typologies.shift()
             break
@@ -101,7 +102,8 @@ export class List{
         })
     }
 
-    loadImportItems(values: any[]){
+    loadImportItems(values: any[]): void
+    {
         values.forEach(element => {
             if(element.length > 0){
                 let values = element.split(';')
