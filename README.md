@@ -5,6 +5,7 @@
 <div class="markdown-heading">
   <h2 class="heading-element">Overview</h2>
 </div>
+<p><img src="http://dicreaweb.es/typology-list/public/images/typology-list-preview.png" style="max-width:100%;"></p>
 <p>A really simple web application to manage lists with items and typologies.</p>
 <p>This tool allows to anyone to create a List with items and quantities. Each item can be assinged to one typology (item's category). Typologies can be created inside the list as well as items.</p>
 <p>All the information inside the list can be downloaded as a formated text file or sended by email.</p>
