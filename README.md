@@ -36,7 +36,7 @@
   <li><a href="https://html5.org/" rel="nofollow">HTML5</a></li>
   <li><a href="https://getbootstrap.com/" rel="nofollow">Bootstrap 5</a></li>
   <li><a href="https://css3.com/" rel="nofollow">CSS3</a></li>
-  <li><a href="http://vanilla-js.com/" rel="nofollow">Vanilla JS (Pure Javascript)</a></li>
+  <li><a href="https://www.typescriptlang.org/" rel="nofollow">TypeScript</a></li>
 </ul>
 <div class="markdown-heading">
   <h2 class="heading-element">License</h2>
